@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<div class="card shadow-sm">
+  <div class="card-body">
+
+    <h4 class="card-title">Results for {{ original_filename }}</h4>
+
+    {% if missing and missing|length > 0 %}
+      <!-- Missing Clauses Block -->
+      <div class="alert alert-warning mt-3">
+        <h6 class="mb-2">Missing Clauses Detected</h6>
+        <ul class="mb-0">
+          {% for clause in missing %}
+            <li>{{ clause }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <!-- Email Status -->
+      <div class="mt-3">
+        <strong>Email Notification:</strong>
+        {% if email_status %}
+          {% if email_status.status == "sent" %}
+            <span class="badge bg-success">Sent to {{ email_status.recipients|length }} recipients</span>
+          {% else %}
+            <span class="badge bg-danger">Error sending email</span>
+            <div class="small text-muted">{{ email_status.message }}</div>
+          {% endif %}
+        {% else %}
+          <span class="small text-muted">No recipients configured</span>
+        {% endif %}
+      </div>
+
+      <!-- Buttons -->
+      <div class="mt-4 d-flex gap-2">
+        <a class="btn btn-success" href="/download/updated/{{ updated_filename }}">Download Updated Contract</a>
+        <a class="btn btn-outline-primary" href="/download/uploads/{{ saved_filename }}">Download Original File</a>
+        <a class="btn btn-outline-secondary" href="/">Check another</a>
+      </div>
+
+    {% else %}
+      <!-- No Missing Clauses -->
+      <div class="alert alert-success mt-3">
+        <h6 class="mb-2">No missing clauses detected ✅</h6>
+      </div>
+
+      <div class="mt-4 d-flex gap-2">
+        <a class="btn btn-outline-primary" href="/download/uploads/{{ saved_filename }}">Download Uploaded File</a>
+        <a class="btn btn-outline-secondary" href="/">Check another</a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% endblock %}

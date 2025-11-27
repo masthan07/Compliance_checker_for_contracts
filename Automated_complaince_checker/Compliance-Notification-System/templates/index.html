@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card card-upload shadow-sm">
+  <div class="card-body">
+    <h4 class="card-title">Upload Contract</h4>
+    <p class="small-muted">Supported formats: <strong>.docx</strong>, <strong>.txt</strong></p>
+
+    <form action="/upload" method="post" enctype="multipart/form-data" class="mt-3">
+      <div class="mb-3">
+        <label for="contract" class="form-label">Select contract file</label>
+
+        <!-- ✅ FIXED name="file" -->
+        <input class="form-control" type="file" id="contract" name="file" required>
+      </div>
+
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-primary">Check & Notify</button>
+        <a href="/" class="btn btn-outline-secondary">Reset</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}
